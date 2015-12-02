@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "mainController.h"
 @interface AppDelegate ()
 
 @end
@@ -17,9 +17,35 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    mainController *main = [[mainController alloc]init];
+    //设置根控制器
+    self.window.rootViewController = main;
+    
+    [self setStatusBarStyle:application];
+    
+    [self setNavigationBarStyle];
+    //设置主窗口
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
+
+//统一设置状态栏外观
+-(void)setStatusBarStyle:(UIApplication *)application{
+    application.statusBarHidden = YES;
+    application.statusBarStyle = UIStatusBarStyleLightContent;
+}
+//统一设置导航栏外观
+-(void)setNavigationBarStyle{
+    //获取导航栏的外观代理对象
+    UINavigationBar *bar = [UINavigationBar appearance];
+    //设置背景
+    [bar setBackgroundImage:[UIImage imageNamed:@"NavBar64"]forBarMetrics:UIBarMetricsDefault];
+    //设置标题栏文字
+    NSDictionary *arrts = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
+    [bar setTitleTextAttributes:arrts];
+}
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
